@@ -1,9 +1,9 @@
 # ggrep
 
-ggrep is a commandline tool to make it easier to search a local or remote git
+`ggrep` is a commandline tool to make it easier to search a local or remote git
 repository.
 
-ggrep is inspired by [vgrep][0].
+`ggrep` is inspired by [vgrep][0].
 
 ## Features
 
