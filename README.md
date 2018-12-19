@@ -13,4 +13,8 @@ repository.
 - [ ] Electron app
 - [ ] CLI tool
 
+## LICENSE
+
+The project uses a MIT licenses for all files unless otherwise specified.
+
 [0]: https://github.com/vrothberg/vgrep
