@@ -7,7 +7,10 @@ repository.
 
 ## Features
 
-- [ ] Support for GitHub repositories
 - [ ] Support for local git repositories
+- [ ] Support for GitHub repositories
+- [ ] Server only mode
+- [ ] Electron app
+- [ ] CLI tool
 
 [0]: https://github.com/vrothberg/vgrep
