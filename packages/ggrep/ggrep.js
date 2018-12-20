@@ -6,6 +6,7 @@ const chalk = require('chalk');
 const path = require('path');
 const fs = require('fs')
 
+// TODO: move this cache stuff into a seperate js file
 const CacheDirectory = path.join('/tmp/', 'ggrep-cache');
 const CachedConfigFile = path.join(CacheDirectory, 'config.json');
 var CachedConfig = { term: undefined, repository: undefined };
