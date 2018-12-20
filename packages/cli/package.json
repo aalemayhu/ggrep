@@ -28,5 +28,8 @@
   },
   "devDependencies": {
     "js-beautify": "^1.8.9"
+  },
+  "bin": {
+    "ggrep": "./ggrep.js"
   }
 }
