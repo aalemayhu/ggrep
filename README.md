@@ -5,6 +5,10 @@ repository.
 
 `ggrep` is inspired by [vgrep][0].
 
+## Setting up development environment
+
+        npm run bootstrap
+
 ## Features
 
 - [ ] Support for local git repositories

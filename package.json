@@ -2,9 +2,10 @@
   "name": "root",
   "private": true,
   "scripts": {
-    "lint": "eslint --fix packages/**/*.js"
+    "lint": "eslint --fix packages/**/*.js",
+    "bootstrap": "npm install && ./node_modules/.bin/lerna exec npm install"
   },
   "devDependencies": {
-    "lerna": "^3.6.0"
+    "lerna": "^3.7.1"
   }
 }
