@@ -1,0 +1,31 @@
+{
+  "name": "ggrep",
+  "version": "0.0.0",
+  "description": "a frontend to git grep",
+  "main": "ggrep.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "format": "node_modules/.bin/js-beautify -r *.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/scanf/ggrep.git"
+  },
+  "keywords": [
+    "git",
+    "grep",
+    "search"
+  ],
+  "author": "Alexander Alemayhu",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/scanf/ggrep/issues"
+  },
+  "homepage": "https://github.com/scanf/ggrep#readme",
+  "dependencies": {
+    "commander": "^2.19.0"
+  },
+  "devDependencies": {
+    "js-beautify": "^1.8.9"
+  }
+}
