@@ -1,19 +1,27 @@
 #!/usr/bin/env node
 
+const gitGrep = require("../git-grep/");
 const program = require('commander');
-var gitGrep = require("../git-grep/");
+const path = require('path');
+
+var repository_path = function(directory) {
+        // TODO: check it exists.
+        // TODO: check is valid git repo
+    if (!directory.endsWith(".git")) {
+        return path.join(directory, ".git")
+    }
+    return directory;
+}
 
 program.command('local')
     .option('-d, --directory <directory>', 'Use local git repository')
     .option('-k, --keyword <keyword>', 'Keyword to look for')
     .action((cmd) => {
-        const directory = cmd["directory"];
+        var repository = repository_path(cmd["directory"]);
+        console.log('repository=%s', repository);
         const keyword = cmd["keyword"];
 
-        // TODO: check it exists.
-        // TODO: check is valid git repo
-
-        gitGrep(directory, {
+        gitGrep(repository, {
             rev: "HEAD",
             term: keyword
         }).on("data", function(data) {
