@@ -18,23 +18,23 @@ program.command('local')
     .option('-k, --keyword <keyword>', 'Keyword to look for')
     .action((cmd) => {
         var repository = repository_path(cmd["directory"]);
-        console.log('repository=%s', repository);
         const keyword = cmd["keyword"];
+        var first = true;
+        var index = 0;
 
         gitGrep(repository, {
             rev: "HEAD",
             term: keyword
         }).on("data", function(data) {
-            // console.log("Index\tFile\t\tLine\t\tContent")
-            // console.log(data.length);
-            // data.forEach(entry => {
-            //     console.log(entry)
-            // });
-            console.log(data);
+            if (first) {
+                console.log("Index\tFile\t\tLine\t\tContent")
+                first = false;
+            }
+            console.log('%s\t%s\t\t%d\t\t%s', index++, data.file, data.line, data.text);
         }).on("error", function(err) {
             throw err;
         }).on("end", function() {
-            console.log("\n±±±±±±±±±±±±±±±±±±");
+            // The end.
         });
 
     })
