@@ -35,27 +35,26 @@ var repository_path = function(directory) {
     return directory;
 }
 
-var search = function(repository, keyword) {
+var search = function(repository, term) {
     const repo = path.resolve(repository_path(repository));
-    // TODO: rename keyword to term
     var first = true;
     var index = 0;
     // TODO: pagination...
     // TODO: fix column alignment
-    gitGrep(repo, { rev: "HEAD", term: keyword }).on("data", function(data) {
+    gitGrep(repo, { rev: "HEAD", term: term }).on("data", function(data) {
         if (first) {
             console.log("%s\t%s\t\t%s\t\%s", chalk.yellow.underline("Index"), chalk.blue.underline("File"), chalk.green.underline("Line"), chalk.underline("Content"))
             first = false;
         }
         // TODO: use zebra coloring on index
-        // TODO: should we highlight all occurences of the keyword?
-        console.log('%s\t%s\t\t%s\t\t%s', chalk.yellow(index++), chalk.blue(data.file), chalk.green(data.line), data.text.replace(keyword, chalk.bold.red(keyword)));
+        // TODO: should we highlight all occurences of the term?
+        console.log('%s\t%s\t\t%s\t\t%s', chalk.yellow(index++), chalk.blue(data.file), chalk.green(data.line), data.text.replace(term, chalk.bold.red(term)));
     }).on("error", function(err) {
         throw err;
     }).on("end", function() {
-        if (CachedConfig.term != keyword) {
+        if (CachedConfig.term != term) {
             CachedConfig.repository = repo;
-            CachedConfig.term = keyword;
+            CachedConfig.term = term;
             fs.writeFileSync(CachedConfigFile, JSON.stringify(CachedConfig, null, 2))
         }
     });
@@ -63,9 +62,9 @@ var search = function(repository, keyword) {
 
 program.command('local')
     .option('-d, --directory <directory>', 'Use local git repository')
-    .option('-k, --keyword <keyword>', 'Keyword to look for')
+    .option('-k, --term <term>', 'term to look for')
     .action((cmd) => {
-        search(cmd["directory"], cmd["keyword"]);
+        search(cmd["directory"], cmd["term"]);
     })
 
 program.command('remote <repo>')
