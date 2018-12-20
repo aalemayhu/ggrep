@@ -23,6 +23,7 @@
   },
   "homepage": "https://github.com/scanf/ggrep#readme",
   "dependencies": {
+    "chalk": "^2.4.1",
     "commander": "^2.19.0"
   },
   "devDependencies": {

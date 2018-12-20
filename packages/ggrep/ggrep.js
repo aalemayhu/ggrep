@@ -2,6 +2,7 @@
 
 const gitGrep = require("../git-grep/");
 const program = require('commander');
+const chalk = require('chalk');
 const path = require('path');
 
 var repository_path = function(directory) {
@@ -27,10 +28,12 @@ program.command('local')
             term: keyword
         }).on("data", function(data) {
             if (first) {
-                console.log("Index\tFile\t\tLine\t\tContent")
+                console.log("%s\t%s\t\t%s\t\%s", chalk.yellow.underline("Index"), chalk.blue.underline("File"), chalk.green.underline("Line"), chalk.underline("Content"))
                 first = false;
             }
-            console.log('%s\t%s\t\t%d\t\t%s', index++, data.file, data.line, data.text);
+            // TODO: use zebra coloring on index
+            // TODO: should we highlight all occurences of the keyword?
+            console.log('%s\t%s\t\t%s\t\t%s', chalk.yellow(index++), chalk.blue(data.file), chalk.green(data.line), data.text.replace(keyword, chalk.bold.red(keyword)));
         }).on("error", function(err) {
             throw err;
         }).on("end", function() {
