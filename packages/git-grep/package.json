@@ -4,13 +4,13 @@
   "description": "Easily search a git repo in a Node streamy way (by shelling out to git-grep(1)).",
   "main": "index.js",
   "dependencies": {
-    "git-spawned-stream": "~0.1.0",
+    "git-spawned-stream": "^1.0.1",
     "split-transform-stream": "~0.1.1"
   },
   "devDependencies": {
+    "mocha": "^5.2.0",
     "proxyquire": "~1.0.0",
-    "should": "~3.3.2",
-    "mocha": "~1.19.0"
+    "should": "~3.3.2"
   },
   "scripts": {
     "test": "mocha"
