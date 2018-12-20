@@ -1,6 +1,9 @@
 {
   "name": "root",
   "private": true,
+  "scripts": {
+    "lint": "eslint --fix packages/**/*.js"
+  },
   "devDependencies": {
     "lerna": "^3.6.0"
   }
