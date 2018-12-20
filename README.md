@@ -1,4 +1,6 @@
-# ggrep [![lerna](https://img.shields.io/badge/maintained%20with-lerna-cc00ff.svg)](https://lernajs.io/)
+# ![logo](./GitHub/ggrep.png)
+
+[![lerna](https://img.shields.io/badge/maintained%20with-lerna-cc00ff.svg)](https://lernajs.io/)
 
 `ggrep` is a commandline tool to make it easier to search a local or remote git
 repository.
