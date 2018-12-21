@@ -20,7 +20,6 @@ var repository_path = function(directory) {
 
 
 var spawn_editor = function(file, line) {
-	// TODO: handle other types of editors
     child_process.spawn('/usr/bin/vim', [file, `+:${line}`], {
         stdio: 'inherit'
     });
