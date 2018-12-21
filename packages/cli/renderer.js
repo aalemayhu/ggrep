@@ -19,7 +19,7 @@ var format_entry = function(index, term, data) {
 var format_error = function(msg) {
 	const prefix = colors.HighlightColor("Error");
 	return `${prefix}: ${msg}`;
-}
+};
 
 module.exports = {
 	format_header,

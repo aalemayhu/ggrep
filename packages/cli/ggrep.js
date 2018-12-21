@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 
+const child_process = require("child_process");
 const { GGCache } = new require("./cache");
 const gitGrep = require("../git-grep/");
 const renderer = require("./renderer");
@@ -16,12 +17,21 @@ var repository_path = function(directory) {
 	return directory;
 };
 
+
+
+var spawn_editor = function(file, line) {
+	// TODO: handle other types of editors
+    child_process.spawn('/usr/bin/vim', [file, `+:${line}`], {
+        stdio: 'inherit'
+    });
+};
+
 var search = function(repository, term) {
-    const repo = path.resolve(repository_path(repository));
-    if (fs.existsSync(repo) === false) {
-        console.log(renderer.format_error(`${repo} is not a valid directory path`))
-        process.exit(1);
-    }
+	const repo = path.resolve(repository_path(repository));
+	if (fs.existsSync(repo) === false) {
+		console.log(renderer.format_error(`${repo} is not a valid directory path`));
+		process.exit(1);
+	}
 	// TODO: check is valid git repo
 
 	var first = true;
@@ -31,17 +41,19 @@ var search = function(repository, term) {
 	gitGrep(repo, { rev: "HEAD", term: term }).on("data", function(data) {
 		if (first) {
 			console.log(renderer.format_header());
+			cache.reset();
 			first = false;
 		}
 		// TODO: should we highlight all occurences of the keyword?
 		console.log(renderer.format_entry(index, term, data));
+		cache.write_entry(path.resolve(data.file), data.line);
 		index += 1;
 	}).on("error", function(err) {
 		// TODO: handle no matches found
 		throw err;
 	}).on("end", function() {
 		if (cache.DefaultConfig.term != term) {
-            cache.save(term, repo);
+			cache.save(term, repo);
 		}
 	});
 };
@@ -64,13 +76,16 @@ program.command("remote <repo>")
 		console.log("Remote=%s", remote);
 		// TODO: Make sure valid protocol can be inferred.
 		console.log("To be implemented: %s %s", remote, cmd);
-    });
+	});
     
 program.command("show <line>")
-.action(function(line) {
-    // TODO: use the cache to find the exact file and location
-    console.log("Line=%s", line);
-})
+	.action(function(line) {
+		// TODO: use the cache to find the exact file and location
+		const match = cache.entry_at(line);
+		const file_name = match[0];
+        const file_line = match[1];
+		spawn_editor(file_name, file_line);
+	});
 
 // Default behviour should be to search in the current directory
 program.command("*").action((term) => {
