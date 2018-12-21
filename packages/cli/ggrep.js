@@ -2,8 +2,11 @@
 
 const gitGrep = require("../git-grep/");
 const program = require('commander');
-const chalk = require('chalk');
+const colors = require("./colors");
 const path = require('path');
+
+// TODO: support ignoring case
+// TODO: regex support
 
 var repository_path = function(directory) {
         // TODO: check it exists.
@@ -24,12 +27,22 @@ var search = function(repository, keyword) {
         term: keyword
     }).on("data", function(data) {
         if (first) {
-            console.log("%s\t%s\t\t%s\t\%s", chalk.yellow.underline("Index"), chalk.blue.underline("File"), chalk.green.underline("Line"), chalk.underline("Content"))
+            console.log
+            ("%s\t%s\t\t%s\t\%s", 
+            colors.IndexColor.underline("Index"),
+            colors.FileColor.underline("File"),
+            colors.LineColor.underline("Line"),
+            colors.ContentColor.underline("Content"))
             first = false;
         }
-        // TODO: use zebra coloring on index
         // TODO: should we highlight all occurences of the keyword?
-        console.log('%s\t%s\t\t%s\t\t%s', chalk.yellow(index++), chalk.blue(data.file), chalk.green(data.line), data.text.replace(keyword, chalk.bold.red(keyword)));
+        console.log(
+            '%s\t%s\t\t%s\t\t%s',
+            index % 2 ? colors.SecondaryIndexColor(index) : colors.IndexColor(index),
+            colors.FileColor(data.file),
+            colors.LineColor(data.line),
+            data.text.replace(keyword, colors.HighlightColor(keyword)));
+            index += 1;
     }).on("error", function(err) {
         throw err;
     }).on("end", function() {
