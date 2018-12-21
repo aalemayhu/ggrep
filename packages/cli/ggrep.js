@@ -3,9 +3,9 @@
 const version = require('./package.json').version;
 const child_process = require("child_process");
 const { GGCache } = new require("./cache");
-const gitGrep = require("../git-grep/");
 const renderer = require("./renderer");
 const program = require("commander");
+const lib = require("../lib/shared");
 const path = require("path");
 const fs = require("fs");
 
@@ -33,31 +33,24 @@ var search = function(repository, term) {
 	const repo = path.resolve(repository_path(repository));
 	if (fs.existsSync(repo) === false) {
 		err_bail(`${repo} is not a valid directory path`);
-	}
-	// TODO: check is valid git repo
-
-	var first = true;
-	var index = 0;
+    }
+    if (cache.DefaultConfig.term != term) {
+        cache.reset();
+        cache.save(term, repo);
+    }
+    lib.search(term, repo, (entries) => {
+        console.log(renderer.format_header());
+     
+        var index = 0;
+        entries.forEach(data => {
+            console.log(renderer.format_entry(index, term, data));
+            // TODO: should we highlight all occurences of the keyword?
+            cache.write_entry(path.resolve(data.file), data.line);
+            index += 1;
+        });
+    })
 	// TODO: pagination...
 	// TODO: fix column alignment
-	gitGrep(repo, { rev: "HEAD", term: term }).on("data", function(data) {
-		if (first) {
-			console.log(renderer.format_header());
-			cache.reset();
-			first = false;
-		}
-		// TODO: should we highlight all occurences of the keyword?
-		console.log(renderer.format_entry(index, term, data));
-		cache.write_entry(path.resolve(data.file), data.line);
-		index += 1;
-	}).on("error", function(err) {
-		// TODO: handle no matches found
-		throw err;
-	}).on("end", function() {
-		if (cache.DefaultConfig.term != term) {
-			cache.save(term, repo);
-		}
-	});
 };
 
 
