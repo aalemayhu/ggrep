@@ -1,31 +1,12 @@
 #!/usr/bin/env node
 
+const { GGCache } = new require("./cache");
 const gitGrep = require("../git-grep/");
 const renderer = require("./renderer");
 const program = require("commander");
 const path = require("path");
-const fs = require("fs");
 
-// TODO: move this cache stuff into a seperate js file
-const CacheDirectory = path.join("/tmp/", "ggrep-cache");
-const CachedConfigFile = path.join(CacheDirectory, "config.json");
-var CachedConfig = { term: undefined, repository: undefined };
-// Setup the configuration
-{
-	if (fs.existsSync(CacheDirectory) === false) {
-		fs.mkdirSync(CacheDirectory);
-	}  
-
-	if (fs.existsSync(CachedConfigFile)) {
-		try {
-			const data = fs.readFileSync(CachedConfigFile, "utf-8");
-			const tmp = JSON.parse(data);
-			CachedConfig = tmp;
-		} catch (err) {
-			console.log("Error in Cache:", err);
-		}    
-	}  
-}
+const cache = new GGCache();
 
 // TODO: support ignoring case
 // TODO: regex support
@@ -57,10 +38,8 @@ var search = function(repository, term) {
 		// TODO: handle no matches found
 		throw err;
 	}).on("end", function() {
-		if (CachedConfig.term != term) {
-			CachedConfig.repository = repo;
-			CachedConfig.term = term;
-			fs.writeFileSync(CachedConfigFile, JSON.stringify(CachedConfig, null, 2));
+		if (cache.DefaultConfig.term != term) {
+            cache.save(term, repo);
 		}
 	});
 };
@@ -89,9 +68,9 @@ program.parse(process.argv);
 
 // User passed no arguments try using the cache
 if (program.args.length === 0) {
-	if (CachedConfig.term && CachedConfig.repository) {
+	if (cache.DefaultConfig.term && cache.DefaultConfig.repository) {
 		// TODO: destroy cache if repository changed...
-		search(CachedConfig.repository, CachedConfig.term);
+		search(cache.DefaultConfig.repository, cache.DefaultConfig.term);
 	} else {
 		console.log("Found no cache, please specify a term.");
 	}
