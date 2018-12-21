@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 
+const version = require('./package.json').version;
 const child_process = require("child_process");
 const { GGCache } = new require("./cache");
 const gitGrep = require("../git-grep/");
@@ -63,6 +64,7 @@ var search = function(repository, term) {
 // TODO: support ignoring case
 // TODO: regex support
 
+program.version(version, '-v, --version')
 
 program.command("local")
 	.option("-d, --directory <directory>", "Use local git repository")
