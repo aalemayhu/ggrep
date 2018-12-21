@@ -1,8 +1,8 @@
 #!/usr/bin/env node
 
 const gitGrep = require("../git-grep/");
+const renderer = require("./renderer");
 const program = require('commander');
-const colors = require("./colors");
 const path = require('path');
 
 // TODO: support ignoring case
@@ -27,23 +27,14 @@ var search = function(repository, keyword) {
         term: keyword
     }).on("data", function(data) {
         if (first) {
-            console.log
-            ("%s\t%s\t\t%s\t\%s", 
-            colors.IndexColor.underline("Index"),
-            colors.FileColor.underline("File"),
-            colors.LineColor.underline("Line"),
-            colors.ContentColor.underline("Content"))
+            console.log(renderer.format_header())
             first = false;
         }
         // TODO: should we highlight all occurences of the keyword?
-        console.log(
-            '%s\t%s\t\t%s\t\t%s',
-            index % 2 ? colors.SecondaryIndexColor(index) : colors.IndexColor(index),
-            colors.FileColor(data.file),
-            colors.LineColor(data.line),
-            data.text.replace(keyword, colors.HighlightColor(keyword)));
-            index += 1;
+        console.log(renderer.format_entry(index, keyword, data))
+        index += 1;
     }).on("error", function(err) {
+        // TODO: handle no matches found
         throw err;
     }).on("end", function() {
         // The end.
