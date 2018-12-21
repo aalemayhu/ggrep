@@ -64,7 +64,13 @@ program.command("remote <repo>")
 		console.log("Remote=%s", remote);
 		// TODO: Make sure valid protocol can be inferred.
 		console.log("To be implemented: %s %s", remote, cmd);
-	});
+    });
+    
+program.command("show <line>")
+.action(function(line) {
+    // TODO: use the cache to find the exact file and location
+    console.log("Line=%s", line);
+})
 
 // Default behviour should be to search in the current directory
 program.command("*").action((term) => {
