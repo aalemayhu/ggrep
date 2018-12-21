@@ -17,19 +17,21 @@ var repository_path = function(directory) {
 	return directory;
 };
 
-
+var err_bail = function(msg) {
+	console.log(renderer.format_error(msg));
+	process.exit(1);
+};
 
 var spawn_editor = function(file, line) {
-    child_process.spawn('/usr/bin/vim', [file, `+:${line}`], {
-        stdio: 'inherit'
-    });
+	child_process.spawn("/usr/bin/vim", [file, `+:${line}`], {
+		stdio: "inherit"
+	});
 };
 
 var search = function(repository, term) {
 	const repo = path.resolve(repository_path(repository));
 	if (fs.existsSync(repo) === false) {
-		console.log(renderer.format_error(`${repo} is not a valid directory path`));
-		process.exit(1);
+		err_bail(`${repo} is not a valid directory path`);
 	}
 	// TODO: check is valid git repo
 
@@ -79,10 +81,12 @@ program.command("remote <repo>")
     
 program.command("show <line>")
 	.action(function(line) {
-		// TODO: use the cache to find the exact file and location
 		const match = cache.entry_at(line);
+		if (match === undefined) {
+			err_bail("failed to open file, corrupt cache?");
+		}
 		const file_name = match[0];
-        const file_line = match[1];
+		const file_line = match[1];
 		spawn_editor(file_name, file_line);
 	});
 

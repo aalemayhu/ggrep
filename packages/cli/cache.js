@@ -54,10 +54,13 @@ class GGCache {
 	}
 
 	entry_at(index) {
-		// TODO: what todo if cache is corrupt?
-		const buffer = fs.readFileSync(this.entriesFile);
-		const contents = buffer.toString().split("\n");
-		return contents[index].split(":+");
+		try {
+			const buffer = fs.readFileSync(this.entriesFile);
+			const contents = buffer.toString().split("\n");
+			return contents[index].split(":+");	
+		} catch (e) {
+			return undefined;
+		}
 	}
 }
 
