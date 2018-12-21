@@ -8,12 +8,12 @@ var format_header = function() {
     return `${index}\t${file}\t\t${line}\t\t${content}`
 }
 
-var format_entry = function(index, keyword, data) {
+var format_entry = function(index, term, data) {
     const eIndex = index % 2 ? colors.SecondaryIndexColor(index) : colors.IndexColor(index);
     const file = colors.FileColor(data.file);
     const line = colors.LineColor(data.line);
-    const eKeyword = data.text.replace(keyword, colors.HighlightColor(keyword));
-    return `${eIndex}\t${file}\t\t${line}\t\t${eKeyword}`;
+    const eterm = data.text.replace(term, colors.HighlightColor(term));
+    return `${eIndex}\t${file}\t\t${line}\t\t${eterm}`;
 }
 
 module.exports = {
