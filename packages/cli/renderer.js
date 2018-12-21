@@ -16,7 +16,13 @@ var format_entry = function(index, term, data) {
 	return `${eIndex}\t${file}\t\t${line}\t\t${eterm}`;
 };
 
+var format_error = function(msg) {
+	const prefix = colors.HighlightColor("Error");
+	return `${prefix}: ${msg}`;
+}
+
 module.exports = {
 	format_header,
-	format_entry
+	format_entry,
+	format_error
 };

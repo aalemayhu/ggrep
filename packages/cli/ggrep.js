@@ -5,15 +5,11 @@ const gitGrep = require("../git-grep/");
 const renderer = require("./renderer");
 const program = require("commander");
 const path = require("path");
+const fs = require("fs");
 
 const cache = new GGCache();
 
-// TODO: support ignoring case
-// TODO: regex support
-
 var repository_path = function(directory) {
-	// TODO: check it exists.
-	// TODO: check is valid git repo
 	if (!directory.endsWith(".git")) {
 		return path.join(directory, ".git");
 	}
@@ -21,7 +17,13 @@ var repository_path = function(directory) {
 };
 
 var search = function(repository, term) {
-	const repo = path.resolve(repository_path(repository));
+    const repo = path.resolve(repository_path(repository));
+    if (fs.existsSync(repo) === false) {
+        console.log(renderer.format_error(`${repo} is not a valid directory path`))
+        process.exit(1);
+    }
+	// TODO: check is valid git repo
+
 	var first = true;
 	var index = 0;
 	// TODO: pagination...
@@ -43,6 +45,11 @@ var search = function(repository, term) {
 		}
 	});
 };
+
+
+// TODO: support ignoring case
+// TODO: regex support
+
 
 program.command("local")
 	.option("-d, --directory <directory>", "Use local git repository")
