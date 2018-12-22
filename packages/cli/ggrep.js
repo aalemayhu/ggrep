@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-const version = require('./package.json').version;
+const version = require("./package.json").version;
 const child_process = require("child_process");
 const { GGCache } = new require("./cache");
 const renderer = require("./renderer");
@@ -33,22 +33,24 @@ var search = function(repository, term) {
 	const repo = path.resolve(repository_path(repository));
 	if (fs.existsSync(repo) === false) {
 		err_bail(`${repo} is not a valid directory path`);
-    }
-    if (cache.DefaultConfig.term != term) {
-        cache.reset();
-        cache.save(term, repo);
-    }
-    lib.search(term, repo, (entries) => {
-        console.log(renderer.format_header());
+	}
+	if (cache.DefaultConfig.term != term) {
+		cache.reset();
+		cache.save(term, repo);
+	}
+	lib.search(term, repo, (entries) => {
+		if (entries.length > 0) {
+			console.log(renderer.format_header());
      
-        var index = 0;
-        entries.forEach(data => {
-            console.log(renderer.format_entry(index, term, data));
-            // TODO: should we highlight all occurences of the keyword?
-            cache.write_entry(path.resolve(data.file), data.line);
-            index += 1;
-        });
-    })
+			var index = 0;
+			entries.forEach(data => {
+				console.log(renderer.format_entry(index, term, data));
+				// TODO: should we highlight all occurences of the keyword?
+				cache.write_entry(path.resolve(data.file), data.line);
+				index += 1;
+			});	
+		}
+	});
 	// TODO: pagination...
 	// TODO: fix column alignment
 };
@@ -57,7 +59,7 @@ var search = function(repository, term) {
 // TODO: support ignoring case
 // TODO: regex support
 
-program.version(version, '-v, --version')
+program.version(version, "-v, --version");
 
 program.command("local")
 	.option("-d, --directory <directory>", "Use local git repository")
@@ -74,16 +76,22 @@ program.command("remote <repo>")
 		console.log("To be implemented: %s %s", remote, cmd);
 	});
     
-program.command("show <line>")
-	.action(function(line) {
-		const match = cache.entry_at(line);
-		if (match === undefined) {
-			err_bail("failed to open file, corrupt cache?");
-		}
-		const file_name = match[0];
-		const file_line = match[1];
-		spawn_editor(file_name, file_line);
-	});
+program.command("show <line>").action(function(line) {
+	const repository = repository_path(process.cwd());
+	if (cache.DefaultConfig.repository !== repository) {
+		if (cache.DefaultConfig.repository !== undefined)
+			console.log(`Last cache is from ${cache.DefaultConfig.repository}`);
+		err_bail(`No cache for ${repository}`);
+	} 
+
+	const match = cache.entry_at(line);
+	if (match === undefined) {
+		err_bail("failed to open file, corrupt cache?");
+	}
+	const file_name = match[0];
+	const file_line = match[1];
+	spawn_editor(file_name, file_line);
+});
 
 // Default behviour should be to search in the current directory
 program.command("*").action((term) => {

@@ -1,16 +1,16 @@
 const gitGrep = require("../git-grep/");
 
 var search = function(term, repo, cb) {
-    var entries = [];
+	var entries = [];
 
-    // TODO: check is valid git repo
+	// TODO: check is valid git repo
 	gitGrep(repo, { rev: "HEAD", term: term }).on("data", function(data) {
-        entries.push(data);
+		entries.push(data);
 	}).on("error", (err) => {
-        cb([])
+		cb([]);
 	}).on("end", () => cb(entries));
 };
 
 module.exports = {
-    search
-}
+	search
+};
