@@ -12,4 +12,5 @@ install-cli:
 	  npm install -g
 
 website:
+	mkdir -pv content
 	hugo --gc --minify
