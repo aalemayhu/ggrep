@@ -5,7 +5,7 @@ const child_process = require("child_process");
 const { GGCache } = new require("./cache");
 const renderer = require("./renderer");
 const program = require("commander");
-const lib = require("../lib/shared");
+const lib = require("./shared");
 const path = require("path");
 const fs = require("fs");
 
