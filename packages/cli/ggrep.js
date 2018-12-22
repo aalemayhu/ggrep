@@ -45,7 +45,6 @@ var search = function(repository, term) {
 			var index = 0;
 			entries.forEach(data => {
 				console.log(renderer.format_entry(index, term, data));
-				// TODO: should we highlight all occurences of the keyword?
 				cache.write_entry(path.resolve(data.file), data.line);
 				index += 1;
 			});	
