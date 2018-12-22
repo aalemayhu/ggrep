@@ -13,4 +13,5 @@ install-cli:
 
 website:
 	cd ${WEBSITE_DIR} && \
+	  git submodule update --init --recursive && \
 	  hugo --gc --minify
