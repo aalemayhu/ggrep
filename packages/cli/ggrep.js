@@ -78,7 +78,7 @@ program.command("show <line>").action(function(line) {
 	spawn_editor(file_name, file_line);
 });
 
-// Default behviour should be to search in the current directory
+// Default behaviour should be to search in the current directory
 program.command("*").action((term) => {
 	search(".", term);
 });
