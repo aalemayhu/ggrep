@@ -50,13 +50,7 @@ var search = function(repository, term) {
 			});	
 		}
 	});
-	// TODO: pagination...
-	// TODO: fix column alignment
 };
-
-
-// TODO: support ignoring case
-// TODO: regex support
 
 program.version(version, "-v, --version");
 
@@ -67,14 +61,6 @@ program.command("local")
 		search(cmd["directory"], cmd["term"]);
 	});
 
-program.command("remote <repo>")
-	.option("-r, --remote", "Use remote git repository")
-	.action(function(remote, cmd) {
-		console.log("Remote=%s", remote);
-		// TODO: Make sure valid protocol can be inferred.
-		console.log("To be implemented: %s %s", remote, cmd);
-	});
-    
 program.command("show <line>").action(function(line) {
 	const repository = repository_path(process.cwd());
 	if (cache.DefaultConfig.repository !== repository) {
@@ -102,7 +88,6 @@ program.parse(process.argv);
 // User passed no arguments try using the cache
 if (program.args.length === 0) {
 	if (cache.DefaultConfig.term && cache.DefaultConfig.repository) {
-		// TODO: destroy cache if repository changed...
 		search(cache.DefaultConfig.repository, cache.DefaultConfig.term);
 	} else {
 		console.log("Found no cache, please specify a term.");
