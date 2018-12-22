@@ -1,4 +1,4 @@
-const gitGrep = require("git-grep");
+const gitGrep = require("@scanf/git-grep");
 
 var search = function(term, repo, cb) {
 	var entries = [];
