@@ -34,10 +34,11 @@ var search = function(repository, term) {
 	if (fs.existsSync(repo) === false) {
 		err_bail(`${repo} is not a valid directory path`);
 	}
-	if (cache.DefaultConfig.term != term) {
+	if (cache.DefaultConfig.term !== term || cache.DefaultConfig.repository !== repo) {
 		cache.reset();
 		cache.save(term, repo);
 	}
+
 	lib.search(term, repo, (entries) => {
 		if (entries.length > 0) {
 			console.log(renderer.format_header());
