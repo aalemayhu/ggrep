@@ -24,7 +24,8 @@
   "homepage": "https://github.com/scanf/ggrep#readme",
   "dependencies": {
     "chalk": "^2.4.1",
-    "commander": "^2.19.0"
+    "commander": "^2.19.0",
+    "git-grep": "^0.1.0"
   },
   "devDependencies": {
     "js-beautify": "^1.8.9"
