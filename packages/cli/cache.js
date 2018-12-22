@@ -49,7 +49,9 @@ class GGCache {
 
 	reset() {
 		this.entry_writer.close();
-		fs.unlinkSync(this.entriesFile);
+		if (fs.existsSync(this.entriesFile) === true) {
+			fs.unlinkSync(this.entriesFile);
+		}
 		this.entry_writer = this.new_writer();
 	}
 
