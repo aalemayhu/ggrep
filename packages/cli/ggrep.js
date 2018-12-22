@@ -62,7 +62,7 @@ program.command("local")
 		search(cmd["directory"], cmd["term"]);
 	});
 
-program.command("show <line>").action(function(line) {
+program.command("show <line>", "Open editor with the right file and set cursor to right location").action(function(line) {
 	const repository = repository_path(process.cwd());
 	if (cache.DefaultConfig.repository !== repository) {
 		if (cache.DefaultConfig.repository !== undefined)
@@ -80,7 +80,7 @@ program.command("show <line>").action(function(line) {
 });
 
 // Default behaviour should be to search in the current directory
-program.command("*").action((term) => {
+program.command("*", "no args means use cache, one arg means search").action((term) => {
 	search(".", term);
 });
 
