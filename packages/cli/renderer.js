@@ -5,7 +5,7 @@ var format_header = function() {
 	const file = colors.FileColor.underline("File");
 	const line = colors.LineColor.underline("Line");
 	const content = colors.ContentColor.underline("Content");
-	return `${index}\t${file}\t\t${line}\t\t${content}`;
+	return `${index}\t${file}${colors.ContentColor.underline(":")}${line}\t\t${content}`;
 };
 
 var format_entry = function(index, term, data) {
@@ -13,7 +13,7 @@ var format_entry = function(index, term, data) {
 	const eterm = data.text.replace(new RegExp(term, 'g'), colors.HighlightColor(term));
 	const file = colors.FileColor(data.file);
 	const line = colors.LineColor(data.line);
-	return `${eIndex}\t${file}\t\t${line}\t\t${eterm}`;
+	return `${eIndex}\t${file}:${line}\t\t${eterm}`;
 };
 
 var format_error = function(msg) {
