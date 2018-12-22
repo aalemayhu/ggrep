@@ -13,11 +13,11 @@ repository.
 
 ## Features
 
-- [ ] Support for local git repositories
-- [ ] Support for GitHub repositories
-- [ ] Server only mode
+- [X] Support for local git repositories
+- [ ] Support for remotes (GitHub)
+- [ ] Server only mode (vue app)
 - [ ] Electron app
-- [ ] CLI tool
+- [X] CLI tool
 
 ## LICENSE
 
