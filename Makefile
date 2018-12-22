@@ -12,5 +12,5 @@ install-cli:
 	  npm install -g
 
 website:
-	cd ${CLI_DIR} && \
+	cd ${WEBSITE_DIR} && \
 	  hugo --gc --minify
