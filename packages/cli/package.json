@@ -1,6 +1,6 @@
 {
   "name": "ggrep",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "a frontend to git grep",
   "main": "ggrep.js",
   "scripts": {
