@@ -1,0 +1,3 @@
+[submodule "ggrep.xdp.no/themes/kube"]
+	path = ggrep.xdp.no/themes/kube
+	url = https://github.com/scanf/kube.ggrep.xdp.no
