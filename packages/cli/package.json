@@ -28,7 +28,8 @@
     "commander": "^2.19.0"
   },
   "devDependencies": {
-    "js-beautify": "^1.8.9"
+    "js-beautify": "^1.8.9",
+    "nodegit": "^0.23.0"
   },
   "bin": {
     "ggrep": "./ggrep.js"
