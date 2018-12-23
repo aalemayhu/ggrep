@@ -7,6 +7,13 @@ repository.
 
 `ggrep` is inspired by [vgrep][0].
 
+## Usage
+
+        # Inside a git directory
+        ggrep coolFunction
+        # Show match
+        ggrep show 0
+
 ## Setting up development environment
 
         npm run bootstrap
