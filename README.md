@@ -7,6 +7,10 @@ repository.
 
 `ggrep` is inspired by [vgrep][0].
 
+## Installation
+
+        npm install ggrep -g 
+
 ## Usage
 
         # Inside a git directory
