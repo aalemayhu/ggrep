@@ -14,3 +14,7 @@ install-cli:
 website:
 	mkdir -pv content
 	hugo --gc --minify
+
+pristine_env:
+	docker build -t ggrep .
+	docker run -i -t ggrep /bin/sh
