@@ -18,14 +18,6 @@ repository.
 
         npm run bootstrap
 
-## Features
-
-- [X] Support for local git repositories
-- [ ] Support for remotes (GitHub)
-- [ ] Server only mode (vue app)
-- [ ] Electron app
-- [X] CLI tool
-
 ## LICENSE
 
 The project uses a MIT licenses for all files unless otherwise specified.
