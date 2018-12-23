@@ -29,7 +29,7 @@ class GGCache {
 			} catch (err) {
 				console.log("Error in Cache:", err);
 			}    
-		}  
+		}
 	}
 
 	load(config) {
