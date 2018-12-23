@@ -9,8 +9,9 @@ class GGCache {
 		this.defaultConfigFile = path.join(this.cacheDirectory, "config.json");
 		this.DefaultConfig = { term: undefined, repository: undefined };
 		this.entriesFile = path.join(this.cacheDirectory, "entries.txt");
-		this.entry_writer = this.new_writer();
+
 		this.setup();
+		this.entry_writer = this.new_writer();
 	}
 
 	new_writer() {
