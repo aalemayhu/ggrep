@@ -23,7 +23,7 @@
   },
   "homepage": "https://github.com/scanf/ggrep#readme",
   "dependencies": {
-    "@scanf/git-grep": "^0.1.0",
+    "@scanf/git-grep": "^0.1.2",
     "chalk": "^2.4.1",
     "commander": "^2.19.0"
   },
