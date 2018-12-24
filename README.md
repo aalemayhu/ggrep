@@ -1,4 +1,4 @@
-# ![logo](./static/ggrep.png)
+# ![logo](./static/ggrep.png) <sup>![version badge](https://version-badge.egoist.sh/npm/ggrep)</sup>
 
 [![lerna](https://img.shields.io/badge/maintained%20with-lerna-cc00ff.svg)](https://lernajs.io/)
 
