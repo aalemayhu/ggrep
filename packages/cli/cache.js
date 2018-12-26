@@ -45,7 +45,7 @@ class GGCache {
 
 	write_entry(file, line) {
 		// For now just use vim style
-		this.entry_writer.write(`${file}:+${line}\n`);
+		this.entry_writer.write(`${this.DefaultConfig.repository}/${file}:+${line}\n`);
 	}
 
 	reset() {
