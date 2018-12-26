@@ -10,9 +10,16 @@ var format_header = function() {
 
 var format_entry = function(index, term, data) {
 	const eIndex = index % 2 ? colors.SecondaryIndexColor(index) : colors.IndexColor(index);
-	const eterm = data.text.replace(new RegExp(term, 'g'), colors.HighlightColor(term));
 	const file = colors.FileColor(data.file);
 	const line = colors.LineColor(data.line);
+
+        var text = data.text;
+        if (text.length > 80) {
+          text = data.text.substring(0, 76);
+          text += "[...]";
+        }
+	const eterm = text.replace(new RegExp(term, 'g'), colors.HighlightColor(term));
+
 	return `${eIndex}\t${file}:${line}\t\t${eterm}`;
 };
 
