@@ -73,13 +73,6 @@ var search = function(repository, term) {
 
 program.version(version, "-v, --version");
 
-program.command("local")
-  .option("-d, --directory <directory>", "Use local git repository")
-  .option("-k, --term <term>", "term to look for")
-  .action(cmd => {
-    search(cmd["directory"], cmd["term"]);
-  });
-
 program.command("show <line>").action(function(line) {
   // Fail early if default editor is not present
   if (fs.existsSync() === DEFAULT_EDITOR) {
