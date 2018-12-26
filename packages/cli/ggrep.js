@@ -26,11 +26,19 @@ if (fs.existsSync(GIT_PATH) === false) {
   err_bail(`expected git binary at ${GIT_PATH}`);
 }
 
-var repository_path = function(directory) {
-  if (!directory.endsWith(".git")) {
-    return path.join(directory, ".git");
+var find_repository_path = function(path) {
+  var dir = path;
+  if (dir === undefined) {
+    dir = process.cwd();
   }
-  return directory;
+  const stdout = child_process.execFileSync(GIT_PATH, ["-C", dir, "rev-parse", "--show-toplevel"]).toString();
+  const absolute_path = stdout.replace('\n', '');
+
+  if (!absolute_path.endsWith(".git")) {
+    return `${absolute_path}/.git`;
+  }
+
+  return absolute_path;
 };
 
 var spawn_editor = function(file, line) {
@@ -40,35 +48,28 @@ var spawn_editor = function(file, line) {
 };
 
 var search = function(repository, term) {
-  child_process.execFile(GIT_PATH,
-    ["-C", repository, "rev-parse", "--show-toplevel"],
-    (err, stdout, stderr) => {
-	  const repo = path.resolve(repository_path(stdout.replace('\n', '')));
-      if (fs.existsSync(repo) === false) {
-        err_bail(`${repo} is not a valid directory path`);
-      }
-      if (
-        cache.DefaultConfig.term !== term ||
-        cache.DefaultConfig.repository !== repo
-      ) {
-        cache.reset();
-        cache.save(term, repo);
-      }
+  const repo = find_repository_path(repository);
+  if (fs.existsSync(repo) === false) {
+    err_bail(`${repo} is not a valid directory path`);
+  }
 
-      lib.search(term, repo, entries => {
-        if (entries.length > 0) {
-          console.log(renderer.format_header());
+  if (cache.DefaultConfig.term !== term || cache.DefaultConfig.repository !== repo) {
+    cache.reset();
+    cache.save(term, repo);
+  }
 
-          var index = 0;
-          entries.forEach(data => {
-            console.log(renderer.format_entry(index, term, data));
-            cache.write_entry(path.resolve(data.file), data.line);
-            index += 1;
-          });
-        }
+  lib.search(term, repo, entries => {
+    if (entries.length > 0) {
+      console.log(renderer.format_header());
+
+      var index = 0;
+      entries.forEach(data => {
+        console.log(renderer.format_entry(index, term, data));
+        cache.write_entry(path.resolve(data.file), data.line);
+        index += 1;
       });
     }
-  );
+  });
 };
 
 program.version(version, "-v, --version");
@@ -79,7 +80,8 @@ program.command("show <line>").action(function(line) {
     err_bail(`missing editor at ${DEFAULT_EDITOR}`);
   }
 
-  const repository = repository_path(process.cwd());
+  const repository = find_repository_path(undefined);
+  // Handle cache mismatch
   if (cache.DefaultConfig.repository !== repository) {
     if (cache.DefaultConfig.repository !== undefined)
       console.log(`Last cache is from ${cache.DefaultConfig.repository}`);
