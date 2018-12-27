@@ -19,8 +19,24 @@ var assert_editor_at = function(editor_path) {
   }
 };
 
+var handle_cache_mismatch = function(cache, repository) {
+  // Handle cache mismatch
+  if (cache.DefaultConfig.repository !== repository) {
+    if (cache.DefaultConfig.repository !== undefined)
+      console.log(`Last cache is from ${cache.DefaultConfig.repository}`);
+    err_bail(`No cache for ${repository}`);
+  }
+};
+
+var assert_cache_valid = function(entry) {
+  if (entry === undefined) {
+    err_bail("failed to open file, corrupt cache?");
+  }
+};
+
 module.exports = {
-  err_bail,
   assert_git_at,
-  assert_editor_at
+  assert_editor_at,
+  handle_cache_mismatch,
+  assert_cache_valid
 };
