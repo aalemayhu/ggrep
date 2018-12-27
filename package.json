@@ -2,7 +2,7 @@
   "name": "root",
   "private": true,
   "scripts": {
-    "test": "npm --prefix packages/cli/ run test",
+    "test": "./node_modules/.bin/lerna run test",
     "lint": "eslint --fix packages/**/*.js",
     "bootstrap": "npm install && ./node_modules/.bin/lerna exec npm install"
   },
