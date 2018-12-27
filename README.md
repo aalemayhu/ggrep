@@ -2,6 +2,8 @@
 
 [![lerna](https://img.shields.io/badge/maintained%20with-lerna-cc00ff.svg)](https://lernajs.io/)
 
+[![Build Status](https://travis-ci.org/scanf/ggrep.svg?branch=master)](https://travis-ci.org/scanf/ggrep)
+
 `ggrep` is a commandline tool to make it easier to search a local or remote git
 repository.
 
