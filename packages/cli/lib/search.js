@@ -46,7 +46,7 @@ var start = function(opts) {
     opts.cache.DefaultConfig.repository !== repo
   ) {
     opts.cache.reset();
-    opts.cache.save(term, repo);
+    opts.cache.save(opts.term, repo);
   }
 
   __git_grep(opts.term, repo, entries => {
