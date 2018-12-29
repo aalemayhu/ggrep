@@ -15,6 +15,8 @@ website:
 	mkdir -pv content
 	hugo --gc --minify
 
-pristine_env:
+build_image:
 	docker build -t ggrep .
-	docker run -i -t ggrep /bin/sh
+
+pristine_env: build_image
+	docker run -i -t ggrep /bin/bash
