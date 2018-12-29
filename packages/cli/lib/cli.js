@@ -1,7 +1,7 @@
 const version = require("../package.json").version;
 const cli = require("cac")();
 
-var parsed_cli = function() {
+var parsed_cli = () => {
   cli.option(
     "--editor <type>",
     "Path to text editor (for now only vim supported)",

@@ -1,6 +1,6 @@
 const colors = require("./colors");
 
-var format_header = function() {
+var format_header = () => {
   const index = colors.IndexColor.underline("Index");
   const file = colors.FileColor.underline("File");
   const line = colors.LineColor.underline("Line");
