@@ -14,7 +14,9 @@ var parsed_cli = () => {
     default: "/usr/bin/git"
   });
 
-  cli.command("--show [line]", "Open corresponding file and set cursor");
+  cli.option("--show [line]", "Open corresponding file and set cursor", {
+    default: undefined
+  });
   cli.version(version);
   cli.help();
 
