@@ -14,7 +14,7 @@ var assert_git_at = function(git_path) {
 };
 
 var assert_editor_at = function(editor_path) {
-  if (editor_path === undefined || fs.existsSync() === editor_path) {
+  if (editor_path === undefined || fs.existsSync(editor_path) === false) {
     err_bail(`missing editor at ${editor_path}`);
   }
 };
