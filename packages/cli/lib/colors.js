@@ -5,7 +5,7 @@ const IndexColor = chalk.yellow;
 const FileColor = chalk.blue;
 const LineColor = chalk.green;
 const ContentColor = chalk;
-const HighlightColor = chalk.bold.red;
+const HighlightColor = chalk.bgRed;
 
 // Can we reduce duplication???
 module.exports = {
