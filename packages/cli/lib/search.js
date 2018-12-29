@@ -32,9 +32,6 @@ var find_repository_path = function(git_path, path) {
 
 var start = function(opts) {
   const repo = find_repository_path(opts.git_path, opts.repository);
-  if (fs.existsSync(repo) === false) {
-    err_bail(`${repo} is not a valid directory path`);
-  }
 
   if (
     opts.cache.DefaultConfig.term !== opts.term ||
