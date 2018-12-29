@@ -7,14 +7,9 @@ const fs = require("fs");
 var __git_grep = function(term, repo, cb) {
   var entries = [];
 
-  // TODO: check is valid git repo
   gitGrep(repo, { rev: "HEAD", term: term })
-    .on("data", function(data) {
-      entries.push(data);
-    })
-    .on("error", err => {
-      cb([]);
-    })
+    .on("data", data => entries.push(data))
+    .on("error", err => cb([]))
     .on("end", () => cb(entries));
 };
 
