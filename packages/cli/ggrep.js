@@ -15,7 +15,7 @@ const vim_path = parsed.options["editor"];
 
 sanity_checks.assert_git_at(git_path);
 
-if (line) {
+if (line !== undefined) {
 	/*
    * Perform editor check only before a request to show a line.
    * This way user can create the cache and then install editor later.
