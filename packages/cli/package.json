@@ -26,6 +26,7 @@
     "@scanf/git-grep": "^0.1.2",
     "cac": "^6.3.12",
     "chalk": "^2.4.1",
+    "cliui": "^4.1.0",
     "commander": "^2.19.0"
   },
   "devDependencies": {

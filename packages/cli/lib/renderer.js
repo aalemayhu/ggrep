@@ -5,9 +5,8 @@ var format_header = () => {
   const file = colors.FileColor.underline("File");
   const line = colors.LineColor.underline("Line");
   const content = colors.ContentColor.underline("Content");
-  return `${index}\t${file}${colors.ContentColor.underline(
-    ":"
-  )}${line}\t\t${content}`;
+  const location = `${file}${colors.ContentColor.underline(":")}${line}`;
+  return [index, location, content];
 };
 
 var format_entry = function(index, term, data) {
@@ -26,7 +25,7 @@ var format_entry = function(index, term, data) {
     colors.HighlightColor(term)
   );
 
-  return `${eIndex}\t${file}:${line}\t\t${eterm}`;
+  return [eIndex, `${file}:${line}`, eterm];
 };
 
 var format_error = function(msg) {

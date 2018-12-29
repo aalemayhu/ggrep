@@ -1,8 +1,8 @@
 const child_process = require("child_process");
 const gitGrep = require("@scanf/git-grep");
 const renderer = require("./renderer");
+const ui = require("cliui")();
 const path = require("path");
-const fs = require("fs");
 
 var __git_grep = function(term, repo, cb) {
   var entries = [];
@@ -42,15 +42,28 @@ var start = function(opts) {
   }
 
   __git_grep(opts.term, repo, entries => {
+    var content_column = [];
+    var index_column = [];
+    var file_column = [];
+
     if (entries.length > 0) {
-      console.log(renderer.format_header());
+      var headers = renderer.format_header();
+
+      index_column = headers[0] + "\n";
+      file_column = headers[1] + "\n";
+      content_column = headers[2] + "\n";
 
       var index = 0;
       entries.forEach(data => {
-        console.log(renderer.format_entry(index, opts.term, data));
+        var entry = renderer.format_entry(index, opts.term, data);
+        index_column += entry[0] + "\n";
+        file_column += entry[1] + "\n";
+        content_column += entry[2] + "\n";
         opts.cache.write_entry(path.resolve(data.file), data.line);
         index += 1;
       });
+      ui.span(index_column, file_column, content_column);
+      console.log(ui.toString());
     }
   });
 };
