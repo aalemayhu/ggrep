@@ -53,15 +53,19 @@ var start = function(opts) {
       file_column = headers[1] + "\n";
       content_column = headers[2] + "\n";
 
-      var index = 0;
-      entries.forEach(data => {
+      for (const [index, data] of entries.entries()) {
         var entry = renderer.format_entry(index, opts.term, data);
-        index_column += entry[0] + "\n";
-        file_column += entry[1] + "\n";
-        content_column += entry[2] + "\n";
+        index_column += entry[0];
+        file_column += entry[1];
+        content_column += entry[2];
+
+        if (index !== entries.length - 1) {
+          index_column += "\n";
+          file_column += "\n";
+          content_column += "\n";
+        }
         opts.cache.write_entry(path.resolve(data.file), data.line);
-        index += 1;
-      });
+      }
       ui.span(index_column, file_column, content_column);
       console.log(ui.toString());
     }
