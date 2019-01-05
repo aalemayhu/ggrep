@@ -53,6 +53,7 @@ var start = function(opts) {
       file_column = headers[1] + "\n";
       content_column = headers[2] + "\n";
 
+      var dir = repo.replace(".git", "");
       for (const [index, data] of entries.entries()) {
         var entry = renderer.format_entry(index, opts.term, data);
         index_column += entry[0];
@@ -64,7 +65,8 @@ var start = function(opts) {
           file_column += "\n";
           content_column += "\n";
         }
-        opts.cache.write_entry(path.resolve(data.file), data.line);
+        const absolute_path = path.resolve(path.join(dir, data.file));
+        opts.cache.write_entry(absolute_path, data.line);
       }
       ui.span(index_column, file_column, content_column);
       console.log(ui.toString());
