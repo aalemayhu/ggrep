@@ -21,5 +21,5 @@ build_image:
 pristine_env: build_image
 	docker run -i -t ggrep /bin/bash
 
-publish: lint test
+publish: lint
 	npm publish --access=public
