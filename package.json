@@ -9,5 +9,8 @@
   "devDependencies": {
     "eslint": "^5.11.1",
     "lerna": "^3.7.1"
+  },
+  "dependencies": {
+    "eslint": "^5.12.0"
   }
 }
