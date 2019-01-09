@@ -32,6 +32,7 @@ var find_repository_path = function(git_path, path) {
 
 var start = function(opts) {
   const repo = find_repository_path(opts.git_path, opts.repository);
+  const pwd = process.cwd();
 
   if (
     opts.cache.DefaultConfig.term !== opts.term ||
@@ -40,6 +41,13 @@ var start = function(opts) {
     opts.cache.reset();
     opts.cache.save(opts.term, repo);
   }
+
+  // https://stackoverflow.com/questions/37521893/determine-if-a-path-is-subdirectory-of-another-in-node-js
+  const isChildOf = (child, parent) => {
+    if (child === parent) return false;
+    const parentTokens = parent.split("/").filter(i => i.length);
+    return parentTokens.every((t, i) => child.split("/")[i] === t);
+  };
 
   __git_grep(opts.term, repo, entries => {
     var content_column = [];
@@ -55,6 +63,11 @@ var start = function(opts) {
 
       var dir = repo.replace(".git", "");
       for (const [index, data] of entries.entries()) {
+        const absolute_path = path.resolve(path.join(dir, data.file));
+        const dirname = path.dirname(absolute_path);
+        if (pwd !== dirname && !isChildOf(dirname, pwd)) {
+          continue;
+        }
         var entry = renderer.format_entry(index, opts.term, data);
         index_column += entry[0];
         file_column += entry[1];
@@ -65,7 +78,6 @@ var start = function(opts) {
           file_column += "\n";
           content_column += "\n";
         }
-        const absolute_path = path.resolve(path.join(dir, data.file));
         opts.cache.write_entry(absolute_path, data.line);
       }
       ui.span(index_column, file_column, content_column);
