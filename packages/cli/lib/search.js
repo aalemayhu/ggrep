@@ -73,7 +73,7 @@ var start = function(opts) {
         opts.cache.write_entry(absolute_path, data.line);
       }
       ui.span(index_column, file_column, content_column);
-      console.log(ui.toString());
+      process.stdout.write(ui.toString());
     }
   });
 };
