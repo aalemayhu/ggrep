@@ -1,7 +1,7 @@
 const child_process = require("child_process");
 const gitGrep = require("@scanf/git-grep");
 const renderer = require("./renderer");
-const ui = require("cliui")();
+const ui = require("cliui")({ wrap: false });
 const path = require("path");
 
 var __git_grep = function(term, repo, cb) {
