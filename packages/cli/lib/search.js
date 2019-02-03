@@ -68,9 +68,9 @@ var start = function(opts) {
           continue;
         }
         var entry = renderer.format_entry(index, opts.term, data);
-        index_column += entry[0];
-        file_column += entry[1];
-        content_column += entry[2];
+        index_column += entry.index;
+        file_column += entry.location;
+        content_column += entry.content;
 
         if (index !== entries.length - 1) {
           index_column += "\n";

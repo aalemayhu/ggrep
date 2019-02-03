@@ -26,7 +26,7 @@ var format_entry = function(index, term, data) {
     colors.HighlightColor(term)
   );
 
-  return [eIndex, `${file}:${line}`, eterm];
+  return { index: eIndex, location: `${file}:${line}`, content: eterm };
 };
 
 var format_error = function(msg) {
