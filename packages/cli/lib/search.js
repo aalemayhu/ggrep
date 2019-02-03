@@ -42,13 +42,6 @@ var start = function(opts) {
     opts.cache.save(opts.term, repo);
   }
 
-  // https://stackoverflow.com/questions/37521893/determine-if-a-path-is-subdirectory-of-another-in-node-js
-  const isChildOf = (child, parent) => {
-    if (child === parent) return false;
-    const parentTokens = parent.split("/").filter(i => i.length);
-    return parentTokens.every((t, i) => child.split("/")[i] === t);
-  };
-
   __git_grep(opts.term, repo, entries => {
     var content_column = [];
     var index_column = [];
@@ -64,7 +57,7 @@ var start = function(opts) {
       for (const [index, data] of entries.entries()) {
         const absolute_path = path.resolve(path.join(dir, data.file));
         const dirname = path.dirname(absolute_path);
-        if (pwd !== dirname && !isChildOf(dirname, pwd)) {
+        if (pwd !== dirname && !dirname.includes(pwd)) {
           continue;
         }
         var entry = renderer.format_entry(index, opts.term, data);
