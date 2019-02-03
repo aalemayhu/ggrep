@@ -56,10 +56,9 @@ var start = function(opts) {
 
     if (entries.length > 0) {
       var headers = renderer.format_header();
-
-      index_column = headers[0] + "\n";
-      file_column = headers[1] + "\n";
-      content_column = headers[2] + "\n";
+      index_column = headers.index + "\n";
+      file_column = headers.location + "\n";
+      content_column = headers.content + "\n";
 
       var dir = repo.replace(".git", "");
       for (const [index, data] of entries.entries()) {

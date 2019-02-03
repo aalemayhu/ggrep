@@ -6,7 +6,8 @@ var format_header = () => {
   const line = colors.LineColor.underline("Line");
   const content = colors.ContentColor.underline("Content");
   const location = `${file}${colors.ContentColor.underline(":")}${line}`;
-  return [index, location, content];
+
+  return { index: index, location: location, content: content };
 };
 
 var format_entry = function(index, term, data) {
